@@ -4,16 +4,31 @@ namespace Database\Seeders;
 
 use App\Models\Department;
 use App\Models\Region;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+
+
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
+
+        User::factory()->create([
+            'name' => 'Shane',
+            'email' => 'srosenthal82@gmail.com',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Howard',
+            'email' => 'howard@rosenthaldevelopmentgroup.com',
+        ]);
+
+
         $regions = [
             'NE',
             'NW',
