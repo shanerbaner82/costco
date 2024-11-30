@@ -47,16 +47,16 @@ class DatabaseSeeder extends Seeder
             'D-13 Shelf Stable',
         ];
 
-        foreach ($regions as $region) {
-            Region::factory()->create([
-                'name' => $region,
-            ]);
-        }
-
-        foreach ($departments as $department) {
-            Department::factory()->create([
-                'name' => $department,
-            ]);
-        }
+//        foreach ($regions as $region) {
+//            Region::factory()->create([
+//                'name' => $region,
+//            ]);
+//        }
+//
+//        foreach ($departments as $department) {
+//            Department::factory()->create([
+//                'name' => $department,
+//            ]);
+//        }
     }
 }
