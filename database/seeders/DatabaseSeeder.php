@@ -17,18 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        User::factory()->create([
-            'name' => 'Shane',
-            'email' => 'srosenthal82@gmail.com',
-        ]);
-
-        User::factory()->create([
-            'name' => 'Howard',
-            'email' => 'howard@rosenthaldevelopmentgroup.com',
-        ]);
-
-
         $regions = [
             'NE',
             'NW',
@@ -47,16 +35,16 @@ class DatabaseSeeder extends Seeder
             'D-13 Shelf Stable',
         ];
 
-//        foreach ($regions as $region) {
-//            Region::factory()->create([
-//                'name' => $region,
-//            ]);
-//        }
-//
-//        foreach ($departments as $department) {
-//            Department::factory()->create([
-//                'name' => $department,
-//            ]);
-//        }
+        foreach ($regions as $region) {
+            Region::create([
+                'name' => $region,
+            ]);
+        }
+
+        foreach ($departments as $department) {
+            Department::create([
+                'name' => $department,
+            ]);
+        }
     }
 }
