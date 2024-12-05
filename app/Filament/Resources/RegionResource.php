@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RegionResource\Pages;
 use App\Models\Region;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -21,11 +22,26 @@ class RegionResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->inlineLabel()
+            ->columns(1)
             ->schema([
                 TextInput::make('name')
                     ->label('Name')
                     ->required()
                     ->rules('required', 'string', 'max:255'),
+                TextInput::make('contact_name')
+                    ->label('Contact Name')
+                    ->rules('string', 'max:255'),
+                Select::make('contact_type')
+                    ->options([
+                        'Buyer' => 'Buyer',
+                        'Ass. Buyer' => 'Ass. Buyer',
+                        'AGM' => 'AGM',
+                        'GM' => 'GM',
+                        'Other' => 'Other',
+                    ])
+                    ->label('Contact Type')
+                    ->rules('string', 'max:255'),
             ]);
     }
 
@@ -35,6 +51,12 @@ class RegionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('contact_name')
+                    ->label('Contact Name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('contact_type')
+                    ->label('Contact Type')
                     ->searchable(),
             ])
             ->filters([

@@ -31,12 +31,18 @@ class UserResource extends Resource
                 TextInput::make('email')
                     ->required()
                     ->email()
-                    ->unique('users', 'email')
+                    ->unique('users', 'email', ignoreRecord: true)
                     ->maxLength(255),
-                Forms\Components\TextInput::make('password')// cannot empty
+                Forms\Components\TextInput::make('password')
+                    ->visible(fn($livewire) => $livewire instanceof Pages\CreateUser)
                     ->password()
                     ->revealable()
                     ->maxLength(255),
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 
