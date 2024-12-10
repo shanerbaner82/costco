@@ -2,7 +2,8 @@
 
 namespace App\Filament\Pages;
 
-use App\Filament\Widgets\CalendatWidget;
+use App\Filament\Resources\MeetingResource\Widgets\CalendarTableWidget;
+use App\Filament\Widgets\CalendarWidget;
 use Filament\Pages\Dashboard as FilamentDashboard;
 
 class Dashboard extends FilamentDashboard
@@ -16,7 +17,8 @@ class Dashboard extends FilamentDashboard
     public function getWidgets(): array
     {
         return [
-            CalendatWidget::class,
+            CalendarTableWidget::class,
+            CalendarWidget::class
         ];
     }
 }
