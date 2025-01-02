@@ -17,7 +17,7 @@ class CalendarWidget extends FullCalendarWidget
             ->get()
             ->map(
                 fn (Meeting $meeting) => [
-                    'title' => $meeting->department->name,
+                    'title' => $meeting->region->name . ' ' .$meeting->department->name,
                     'start' => $meeting->kitchen_time,
                     'end' => $meeting->start_time,
                     'url' => route('filament.admin.resources.meetings.edit', ['record' => $meeting]),

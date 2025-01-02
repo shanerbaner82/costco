@@ -3,11 +3,12 @@
 namespace App\Filament\Resources\MeetingResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductsRelationManager extends RelationManager
 {
@@ -20,7 +21,6 @@ class ProductsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Textarea::make('notes'),
             ]);
     }
 
@@ -29,18 +29,14 @@ class ProductsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->disabled()
-                    ->columnSpanFull(),
-                Tables\Columns\TextColumn::make('notes')
-                    ->limit(100)
-                    ->columnSpanFull(),
+                Tables\Columns\TextColumn::make('vendor.name'),
+                Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-//                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
