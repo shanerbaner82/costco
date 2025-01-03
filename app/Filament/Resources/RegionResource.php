@@ -17,6 +17,8 @@ class RegionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-americas';
 
+    protected static ?string $navigationGroup = 'Setup';
+
     protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
