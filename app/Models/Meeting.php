@@ -34,7 +34,7 @@ class Meeting extends Model implements Eventable
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot(['notes', 'requested', 'sent', 'follow_up']);
     }
 
     public function vendors(): BelongsToMany

@@ -14,6 +14,8 @@ class ProductsRelationManager extends RelationManager
 {
     protected static string $relationship = 'products';
 
+    protected static ?string $title = 'Buy Docs';
+
     public function form(Form $form): Form
     {
         return $form
@@ -31,21 +33,12 @@ class ProductsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('vendor.name'),
                 Tables\Columns\TextColumn::make('name'),
-            ])
-            ->filters([
-                //
-            ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Columns\CheckboxColumn::make('requested')
+                    ->label('Requested'),
+                Tables\Columns\CheckboxColumn::make('sent')
+                    ->label('Sent'),
+                Tables\Columns\CheckboxColumn::make('follow_up')
+                    ->label('Follow Up'),
             ]);
     }
 }
