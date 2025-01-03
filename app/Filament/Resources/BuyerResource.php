@@ -51,15 +51,21 @@ class BuyerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('region.name'),
-                Tables\Columns\TextColumn::make('department.name'),
+                Tables\Columns\TextColumn::make('region.name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('department.name')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('category')
                     ->label('Category')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
                     ->label('Name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('position')
+                    ->sortable()
                     ->label('Position')
                     ->searchable(),
             ])
