@@ -9,3 +9,7 @@
 .fi-ta-row {
     @apply divide-x divide-gray-200 dark:divide-white/5;
 }
+
+.prose :where(p):not(:where([class~=not-prose],[class~=not-prose] *)), .prose :where(li):not(:where([class~="not-prose"],[class~="not-prose"] *)){
+    margin:0!important;
+}

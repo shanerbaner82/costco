@@ -18,7 +18,6 @@ class Dashboard extends FilamentDashboard
     {
         return [
             CalendarTableWidget::class,
-            CalendarWidget::class
         ];
     }
 }
