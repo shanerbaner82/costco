@@ -34,17 +34,17 @@ class ProductsRelationManager extends RelationManager
                     })
                     ->label('Not Needed')
                     ->default(false),
-                Forms\Components\DateTimePicker::make('requested_at')
+                Forms\Components\DatePicker::make('requested_at')
                     ->label('Requested')
                     ->seconds(false)
                     ->default(now())
                     ->native(false),
-                Forms\Components\DateTimePicker::make('sent_at')
+                Forms\Components\DatePicker::make('sent_at')
                     ->label('Sent')
                     ->seconds(false)
                     ->default(now())
                     ->native(false),
-                Forms\Components\DateTimePicker::make('follow_up_at')
+                Forms\Components\DatePicker::make('follow_up_at')
                     ->label('Followed Up')
                     ->seconds(false)
                     ->default(now())
