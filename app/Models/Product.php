@@ -26,6 +26,6 @@ class Product extends Model
 
     public function meetings(): BelongsToMany
     {
-        return $this->belongsToMany(Meeting::class)->withPivot(['notes', 'requested', 'sent', 'follow_up']);
+        return $this->belongsToMany(Meeting::class)->withPivot(['notes', 'requested', 'sent', 'follow_up', 'not_needed']);
     }
 }

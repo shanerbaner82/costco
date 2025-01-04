@@ -4,6 +4,8 @@ namespace App\Filament\Resources\MeetingResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -33,11 +35,38 @@ class ProductsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('vendor.name'),
                 Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\ToggleColumn::make('not_needed')
+                    ->afterStateUpdated(function (Set $set, ?string $state, $record) {
+                        $record->pivot->update([
+                            'requested' => false,
+                            'sent' => false,
+                            'follow_up' => false,
+                        ]);
+                    })
+                    ->label('Not needed'),
                 Tables\Columns\CheckboxColumn::make('requested')
+                    ->disabled(fn($record) => $record->pivot->not_needed)
+                    ->afterStateUpdated(function (Set $set, ?string $state, $record) {
+                        $record->pivot->update([
+                            'not_needed' => false,
+                        ]);
+                    })
                     ->label('Requested'),
                 Tables\Columns\CheckboxColumn::make('sent')
+                    ->disabled(fn($record) => $record->pivot->not_needed)
+                    ->afterStateUpdated(function (Set $set, ?string $state, $record) {
+                        $record->pivot->update([
+                            'not_needed' => false,
+                        ]);
+                    })
                     ->label('Sent'),
                 Tables\Columns\CheckboxColumn::make('follow_up')
+                    ->disabled(fn($record) => $record->pivot->not_needed)
+                    ->afterStateUpdated(function (Set $set, ?string $state, $record) {
+                        $record->pivot->update([
+                            'not_needed' => false,
+                        ]);
+                    })
                     ->label('Follow Up'),
             ]);
     }
