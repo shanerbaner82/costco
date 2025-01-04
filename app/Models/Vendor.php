@@ -21,6 +21,6 @@ class Vendor extends Model
 
     public function meetings(): BelongsToMany
     {
-        return $this->belongsToMany(Meeting::class);
+        return $this->belongsToMany(Meeting::class)->withPivot(['samples']);
     }
 }

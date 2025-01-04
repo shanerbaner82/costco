@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\MeetingResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -21,10 +22,33 @@ class ProductsRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
+            ->columns(1)
+            ->inlineLabel()
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                Toggle::make('not_needed')
+                    ->live()
+                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                        $set('requested_at', null);
+                        $set('sent_at', null);
+                        $set('follow_up_at', null);
+                    })
+                    ->label('Not Needed')
+                    ->default(false),
+                Forms\Components\DateTimePicker::make('requested_at')
+                    ->label('Requested')
+                    ->seconds(false)
+                    ->default(now())
+                    ->native(false),
+                Forms\Components\DateTimePicker::make('sent_at')
+                    ->label('Sent')
+                    ->seconds(false)
+                    ->default(now())
+                    ->native(false),
+                Forms\Components\DateTimePicker::make('follow_up_at')
+                    ->label('Followed Up')
+                    ->seconds(false)
+                    ->default(now())
+                    ->native(false),
             ]);
     }
 
@@ -35,39 +59,26 @@ class ProductsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('vendor.name'),
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\ToggleColumn::make('not_needed')
-                    ->afterStateUpdated(function (Set $set, ?string $state, $record) {
-                        $record->pivot->update([
-                            'requested' => false,
-                            'sent' => false,
-                            'follow_up' => false,
-                        ]);
-                    })
-                    ->label('Not needed'),
-                Tables\Columns\CheckboxColumn::make('requested')
-                    ->disabled(fn($record) => $record->pivot->not_needed)
-                    ->afterStateUpdated(function (Set $set, ?string $state, $record) {
-                        $record->pivot->update([
-                            'not_needed' => false,
-                        ]);
-                    })
-                    ->label('Requested'),
-                Tables\Columns\CheckboxColumn::make('sent')
-                    ->disabled(fn($record) => $record->pivot->not_needed)
-                    ->afterStateUpdated(function (Set $set, ?string $state, $record) {
-                        $record->pivot->update([
-                            'not_needed' => false,
-                        ]);
-                    })
-                    ->label('Sent'),
-                Tables\Columns\CheckboxColumn::make('follow_up')
-                    ->disabled(fn($record) => $record->pivot->not_needed)
-                    ->afterStateUpdated(function (Set $set, ?string $state, $record) {
-                        $record->pivot->update([
-                            'not_needed' => false,
-                        ]);
-                    })
-                    ->label('Follow Up'),
+                Tables\Columns\IconColumn::make('not_needed')
+                    ->boolean()
+                    ->label('Not Needed')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('requested_at')
+                    ->dateTime()
+                    ->label('Requested At')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('sent_at')
+                    ->dateTime()
+                    ->label('Sent At')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('follow_up_at')
+                    ->dateTime()
+                    ->label('Follow Up At')
+                    ->sortable(),
+
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
             ]);
     }
 }
