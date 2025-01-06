@@ -60,6 +60,7 @@ class MeetingResource extends Resource
                         'Active' => 'Active',
                         'Completed' => 'Completed',
                     ])
+                    ->live()
                     ->required()
                     ->rules('required'),
                 Select::make('buyers')
@@ -103,7 +104,8 @@ class MeetingResource extends Resource
                 DateTimePicker::make('kitchen_time')
                     ->native(false)
                     ->label('Kitchen Time')
-                    ->required()
+                    ->required(fn (Get $get) => $get('status') !== "Pending")
+                    ->reactive()
                     ->seconds(false)
                     ->minutesStep(15)
                     ->default(now()->startOfHour())
@@ -117,7 +119,8 @@ class MeetingResource extends Resource
                 DateTimePicker::make('start_time')
                     ->native(false)
                     ->label('Start Time')
-                    ->required()
+                    ->required(fn (Get $get) => $get('status') !== "Pending")
+                    ->reactive()
                     ->prefixIcon('heroicon-m-calendar')
                     ->seconds(false)
                     ->minutesStep(15)
@@ -125,6 +128,7 @@ class MeetingResource extends Resource
                     ->rules('required'),
                 DateTimePicker::make('end_time')
                     ->native(false)
+                    ->reactive()
                     ->label('End Time')
                     ->prefixIcon('heroicon-m-calendar')
                     ->seconds(false)
