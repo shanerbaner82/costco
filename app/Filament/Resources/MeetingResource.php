@@ -120,7 +120,6 @@ class MeetingResource extends Resource
                     ->native(false)
                     ->label('Start Time')
                     ->required(fn (Get $get) => $get('status') !== "Pending")
-                    ->reactive()
                     ->prefixIcon('heroicon-m-calendar')
                     ->seconds(false)
                     ->minutesStep(15)
@@ -128,7 +127,6 @@ class MeetingResource extends Resource
                     ->rules('required'),
                 DateTimePicker::make('end_time')
                     ->native(false)
-                    ->reactive()
                     ->label('End Time')
                     ->prefixIcon('heroicon-m-calendar')
                     ->seconds(false)
