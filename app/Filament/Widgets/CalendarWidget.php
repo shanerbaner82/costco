@@ -13,11 +13,10 @@ class CalendarWidget extends FullCalendarWidget
     {
         return Meeting::query()
             ->where('start_time', '>=', $fetchInfo['start'])
-            ->whereStatus('Scheduled')
             ->get()
             ->map(
                 fn (Meeting $meeting) => [
-                    'title' => $meeting->region->name . ' ' .$meeting->department->name,
+                    'title' => '(' . str($meeting->status)->substr(0, 1) . ') ' . $meeting->region->name . ' ' .$meeting->department->name,
                     'start' => $meeting->kitchen_time,
                     'end' => $meeting->start_time,
                     'url' => route('filament.admin.resources.meetings.edit', ['record' => $meeting]),

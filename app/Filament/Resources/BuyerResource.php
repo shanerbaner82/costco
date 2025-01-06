@@ -30,6 +30,8 @@ class BuyerResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(1)
+            ->inlineLabel()
             ->schema([
                 TextInput::make('name')
                     ->label('Name')
