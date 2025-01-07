@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Meeting;
 use Filament\Widgets\Widget;
+use Illuminate\Support\Carbon;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 
 class CalendarWidget extends FullCalendarWidget
@@ -17,7 +18,7 @@ class CalendarWidget extends FullCalendarWidget
             ->map(
                 fn (Meeting $meeting) => [
                     'title' => '(' . str($meeting->status)->substr(0, 1) . ') ' . $meeting->region->name . ' ' .$meeting->department->name,
-                    'start' => $meeting->start_time,
+                    'start' => Carbon::parse($meeting->meeting_date->format('m/d/y') . ' ' . $meeting->start_time->format('h:i a')),
                     'end' => $meeting->end_time,
                     'url' => route('filament.admin.resources.meetings.edit', ['record' => $meeting]),
                 ]

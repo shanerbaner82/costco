@@ -19,6 +19,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -56,6 +57,7 @@ class MeetingResource extends Resource
                 DatePicker::make('meeting_date')
                     ->label('Meeting Date')
                     ->required()
+                    ->native(false)
                     ->prefixIcon('heroicon-m-calendar')
                     ->minutesStep(15),
                 Select::make('status')
@@ -93,6 +95,7 @@ class MeetingResource extends Resource
                     ->rules('required'),
                 Select::make('vendors')
                     ->relationship('vendors', 'name')
+                    ->live()
                     ->preload()
                     ->searchable()
                     ->multiple()
@@ -109,12 +112,10 @@ class MeetingResource extends Resource
                     ),
                 DateTimePicker::make('kitchen_time')
                     ->label('Kitchen Time')
-                    ->required(fn (Get $get) => $get('status') !== "Pending")
                     ->date(false)
                     ->reactive()
                     ->seconds(false)
                     ->minutesStep(15)
-                    ->default(now()->startOfHour())
                     ->prefixIcon('heroicon-m-calendar')
                     ->live()
                     ->afterStateUpdated(function (Set $set, ?string $state) {
@@ -129,7 +130,6 @@ class MeetingResource extends Resource
                     ->seconds(false)
                     ->date(false)
                     ->minutesStep(15)
-                    ->default(fn(Get $get) => $get('kitchen_time') ? Carbon::parse($get('kitchen_time'))->addMinutes(30) : null)
                     ->rules('required'),
                 DateTimePicker::make('end_time')
                     ->label('End Time')
@@ -137,7 +137,6 @@ class MeetingResource extends Resource
                     ->prefixIcon('heroicon-m-calendar')
                     ->seconds(false)
                     ->minutesStep(15)
-                    ->default(fn(Get $get) => Carbon::parse($get('kitchen_time'))->addMinutes(90))
                     ->rules('required'),
                 RichEditor::make('notes'),
                 RichEditor::make('menu'),
@@ -183,6 +182,7 @@ class MeetingResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\MeetingResource\Pages;
 
 use App\Filament\Resources\MeetingResource;
+use App\Models\Meeting;
 use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Resources\Pages\EditRecord;
 
@@ -14,6 +16,7 @@ class EditMeeting extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+
             ActionGroup::make([
                 Actions\Action::make('print')
                     ->label('Notes')
@@ -22,7 +25,7 @@ class EditMeeting extends EditRecord
                         'meeting' => $record->id,
                         'type' => 'Notes',
                         'data' => $record->notes,
-                    ] ))
+                    ]))
                     ->color('primary'),
                 Actions\Action::make('print')
                     ->label('Shopping List')
@@ -31,7 +34,7 @@ class EditMeeting extends EditRecord
                         'meeting' => $record->id,
                         'type' => 'Shopping List',
                         'data' => $record->shopping_list,
-                    ] ))
+                    ]))
                     ->color('primary'),
                 Actions\Action::make('print')
                     ->label('Menu')
@@ -40,7 +43,7 @@ class EditMeeting extends EditRecord
                         'meeting' => $record->id,
                         'type' => 'Menu',
                         'data' => $record->menu,
-                    ] ))
+                    ]))
                     ->color('primary'),
                 Actions\Action::make('print')
                     ->label('Test Kitchen')
@@ -49,7 +52,7 @@ class EditMeeting extends EditRecord
                         'meeting' => $record->id,
                         'type' => 'Test Kitchen',
                         'data' => $record->test_kitchen,
-                    ] ))
+                    ]))
                     ->color('primary'),
                 Actions\Action::make('print')
                     ->label('Samples')
@@ -58,7 +61,7 @@ class EditMeeting extends EditRecord
                         'meeting' => $record->id,
                         'type' => 'Samples',
                         'data' => $record->samples,
-                    ] ))
+                    ]))
                     ->color('primary'),
                 Actions\Action::make('print')
                     ->hidden(fn($record) => !$record->recap)
@@ -67,7 +70,7 @@ class EditMeeting extends EditRecord
                         'meeting' => $record->id,
                         'type' => 'Recap',
                         'data' => $record->recap,
-                    ] ))
+                    ]))
                     ->color('primary'),
             ])
                 ->button()
