@@ -19,6 +19,7 @@ class Meeting extends Model implements Eventable
     protected $guarded = [];
 
     protected $casts = [
+        'meeting_date' => 'date',
         'start_time' => 'datetime'
     ];
 

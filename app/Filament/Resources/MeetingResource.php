@@ -8,6 +8,7 @@ use App\Filament\Resources\MeetingResource\RelationManagers\VendorsRelationManag
 use App\Models\Meeting;
 use App\Models\User;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
@@ -52,6 +53,11 @@ class MeetingResource extends Resource
                     ->searchable()
                     ->live()
                     ->rules('required'),
+                DatePicker::make('meeting_date')
+                    ->label('Meeting Date')
+                    ->required()
+                    ->prefixIcon('heroicon-m-calendar')
+                    ->minutesStep(15),
                 Select::make('status')
                     ->options([
                         'Pending' => 'Pending',
@@ -102,9 +108,9 @@ class MeetingResource extends Resource
                             ->where('is_active', true),
                     ),
                 DateTimePicker::make('kitchen_time')
-                    ->native(false)
                     ->label('Kitchen Time')
                     ->required(fn (Get $get) => $get('status') !== "Pending")
+                    ->date(false)
                     ->reactive()
                     ->seconds(false)
                     ->minutesStep(15)
@@ -117,17 +123,17 @@ class MeetingResource extends Resource
                     })
                     ->rules('required'),
                 DateTimePicker::make('start_time')
-                    ->native(false)
                     ->label('Start Time')
                     ->required(fn (Get $get) => $get('status') !== "Pending")
                     ->prefixIcon('heroicon-m-calendar')
                     ->seconds(false)
+                    ->date(false)
                     ->minutesStep(15)
                     ->default(fn(Get $get) => $get('kitchen_time') ? Carbon::parse($get('kitchen_time'))->addMinutes(30) : null)
                     ->rules('required'),
                 DateTimePicker::make('end_time')
-                    ->native(false)
                     ->label('End Time')
+                    ->date(false)
                     ->prefixIcon('heroicon-m-calendar')
                     ->seconds(false)
                     ->minutesStep(15)
