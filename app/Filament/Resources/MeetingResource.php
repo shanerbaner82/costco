@@ -113,31 +113,21 @@ class MeetingResource extends Resource
                 DateTimePicker::make('kitchen_time')
                     ->label('Kitchen Time')
                     ->date(false)
-                    ->reactive()
                     ->seconds(false)
                     ->minutesStep(15)
-                    ->prefixIcon('heroicon-m-calendar')
-                    ->live()
-                    ->afterStateUpdated(function (Set $set, ?string $state) {
-                        $set('start_time', Carbon::parse($state)->addMinutes(30));
-                        $set('end_time', Carbon::parse($state)->addMinutes(90));
-                    })
-                    ->rules('required'),
+                    ->prefixIcon('heroicon-m-calendar'),
                 DateTimePicker::make('start_time')
                     ->label('Start Time')
-                    ->required(fn (Get $get) => $get('status') !== "Pending")
                     ->prefixIcon('heroicon-m-calendar')
                     ->seconds(false)
                     ->date(false)
-                    ->minutesStep(15)
-                    ->rules('required'),
+                    ->minutesStep(15),
                 DateTimePicker::make('end_time')
                     ->label('End Time')
                     ->date(false)
                     ->prefixIcon('heroicon-m-calendar')
                     ->seconds(false)
-                    ->minutesStep(15)
-                    ->rules('required'),
+                    ->minutesStep(15),
                 RichEditor::make('notes'),
                 RichEditor::make('menu'),
                 RichEditor::make('shopping_list'),
