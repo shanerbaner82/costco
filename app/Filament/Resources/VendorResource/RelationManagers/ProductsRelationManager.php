@@ -49,7 +49,6 @@ class ProductsRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                ReplicateAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

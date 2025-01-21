@@ -100,7 +100,8 @@ class MeetingResource extends Resource
                     ->searchable()
                     ->multiple()
                     ->required(),
-                CheckboxList::make('products')
+                Select::make('products')
+                    ->multiple()
                     ->disabled(fn(Get $get) => !$get('department_id'))
                     ->getOptionLabelFromRecordUsing(fn(Model $record) => " ({$record->vendor->name}) {$record->name}")
                     ->relationship(
@@ -108,7 +109,8 @@ class MeetingResource extends Resource
                         modifyQueryUsing: fn(Builder $query, Get $get) => $query
                             ->whereIn('vendor_id', $get('vendors'))
                             ->where('department_id', $get('department_id'))
-                            ->where('is_active', true),
+                            ->where('is_active', true)
+                            ->orderBy('name'),
                     ),
                 DateTimePicker::make('kitchen_time')
                     ->label('Kitchen Time')
