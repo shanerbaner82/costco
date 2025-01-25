@@ -44,7 +44,7 @@
         <div class="mb-6">
             <h2 class="text-lg font-semibold text-gray-800 mb-3">Products</h2>
             <ul class="list-disc pl-5 space-y-1">
-                @foreach($meeting->products as $product)
+                @foreach($meeting->products->sortBy('name') as $product)
                     <li>({{$product->vendor->name}}) {{$product->name}}</li>
                 @endforeach
             </ul>

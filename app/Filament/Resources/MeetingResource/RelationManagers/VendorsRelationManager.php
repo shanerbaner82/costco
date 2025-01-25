@@ -15,6 +15,8 @@ class VendorsRelationManager extends RelationManager
 {
     protected static string $relationship = 'vendors';
 
+    protected static ?string $title = 'Samples';
+
     public function form(Form $form): Form
     {
         return $form
@@ -26,6 +28,12 @@ class VendorsRelationManager extends RelationManager
                     ->disabled()
                     ->maxLength(255),
                 Forms\Components\RichEditor::make('samples')
+                    ->formatStateUsing(function($state){
+                        if(!$state) {
+                            return '<p><b>Ship:</b></p><p><b>Delivery:</b></p><br/><p><b>Please Ship To: </b></p>';
+                        }
+                        return $state;
+                    })
             ]);
     }
 

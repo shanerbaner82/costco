@@ -169,16 +169,15 @@ class MeetingResource extends Resource
                         'Active' => 'Active',
                         'Completed' => 'Completed',
                     ]),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->defaultSort('start_time')
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\EditAction::make()
+                    ->button(),
+                Tables\Actions\DeleteAction::make()
+                    ->button()
+                    ->visible(fn($record) => $record->status !== 'Completed'),
             ]);
     }
 
