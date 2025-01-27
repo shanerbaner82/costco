@@ -102,6 +102,8 @@ class MeetingResource extends Resource
                     ->required(),
                 Select::make('products')
                     ->multiple()
+                    ->searchable()
+                    ->preload()
                     ->disabled(fn(Get $get) => !$get('department_id'))
                     ->getOptionLabelFromRecordUsing(fn(Model $record) => " ({$record->vendor->name}) {$record->name}")
                     ->relationship(
