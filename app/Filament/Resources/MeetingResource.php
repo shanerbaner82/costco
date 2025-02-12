@@ -68,9 +68,7 @@ class MeetingResource extends Resource
                         'Active' => 'Active',
                         'Completed' => 'Completed',
                     ])
-                    ->live()
-                    ->required()
-                    ->rules('required'),
+                    ->live(),
                 Select::make('buyers')
                     ->multiple()
                     ->disabled(fn(Get $get) => !$get('department_id'))
@@ -81,8 +79,7 @@ class MeetingResource extends Resource
                         modifyQueryUsing: fn(Builder $query, Get $get) => $query
                             ->where('department_id', $get('department_id'))
                             ->where('region_id', $get('region_id')),
-                    )
-                    ->required(),
+                    ),
                 Select::make('users')
                     ->label('Sales Team')
                     ->multiple()
@@ -91,8 +88,7 @@ class MeetingResource extends Resource
                     ->relationship(
                         titleAttribute: 'name',
                         modifyQueryUsing: fn(Builder $query) => User::role('sales'),
-                    )
-                    ->rules('required'),
+                    ),
                 Select::make('vendors')
                     ->relationship('vendors', 'name')
                     ->live()

@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsRelationManager extends RelationManager
 {
@@ -61,7 +62,7 @@ class ProductsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\IconColumn::make('not_needed')
                     ->boolean()
-                    ->label('Not Needed')
+                    ->label('Needed')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('requested_at')
                     ->dateTime()
@@ -75,10 +76,32 @@ class ProductsRelationManager extends RelationManager
                     ->dateTime()
                     ->label('Follow Up At')
                     ->sortable(),
-
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('download')
+                    ->label('Download')
+                    ->visible(fn($record) => $record->buy_doc_url)
+                    ->url(fn($record) => Storage::disk('public')->url($record->buy_doc_url))
+                    ->openUrlInNewTab(),
+                Tables\Actions\Action::make('buy_doc_url')
+                    ->icon('heroicon-o-printer')
+                    ->label('Upload Buy Doc')
+                    ->button()
+                    ->form([
+                        Forms\Components\FileUpload::make('buy_doc_url')
+                            ->disk('public')
+                            ->label('Buy Doc')
+                            ->maxFiles(1)
+                            ->preserveFilenames()
+                            ->openable()
+                            ->directory('buy_docs')
+                            ->required()
+                        ,
+                    ])
+                    ->action(function (array $data, $record): void {
+                        $record->pivot->update(['buy_doc_url' => $data['buy_doc_url']]);
+                    })
             ]);
     }
 }
