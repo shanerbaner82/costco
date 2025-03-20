@@ -48,6 +48,10 @@ class VendorsRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Print')
+                    ->visible(fn($record) => $record->samples)
+                    ->url(fn($record) => route('print-samples', ['vendor' => $record, 'meeting' => $this->ownerRecord->id]))
+                    ->icon('heroicon-o-printer')
             ]);
     }
 }

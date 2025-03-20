@@ -166,7 +166,7 @@ class MeetingResource extends Resource
                         'Scheduled' => 'Scheduled',
                         'Active' => 'Active',
                         'Completed' => 'Completed',
-                    ]),
+                    ])->default('Scheduled'),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->defaultSort('start_time')
