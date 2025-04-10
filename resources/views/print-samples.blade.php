@@ -27,9 +27,7 @@
                 <td style="padding: 10px;">{{$meeting->department->name}}</td>
                 <td style="padding: 10px; font-weight: 600;">Vendors:</td>
                 <td style="padding: 10px;">
-                    @foreach($meeting->vendors as $vendor)
-                        {{$vendor->name}}<br>
-                    @endforeach
+                    {{$vendor->name}}
                 </td>
             </tr>
             <tr style="background-color: #f9f9f9;">

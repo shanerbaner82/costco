@@ -17,6 +17,7 @@ Route::get('/print', function () {
 })->name('print');
 
 Route::get('/print-samples/{vendor}/{meeting}', function (Vendor $vendor, Meeting $meeting) {
+
     $samples = ($meeting->vendors->filter(function ($v) use ($vendor) {
         return $v->id === $vendor->id;
     })->first()->pivot->samples);
@@ -26,7 +27,8 @@ Route::get('/print-samples/{vendor}/{meeting}', function (Vendor $vendor, Meetin
         'vendor' => $vendor,
         'samples' => $samples,
     ]);
-    return $pdf->download( 'samples-'.$vendor->name.'-'. $meeting->region->name . '-' . $meeting->department->name . '-' . $meeting->start_time->format('m-d-y') . '.pdf');
+
+    return $pdf->stream( 'samples-'.$vendor->name.'-'. $meeting->region->name . '-' . $meeting->department->name . '-' . $meeting->start_time->format('m-d-y') . '.pdf');
 })->name('print-samples');
 
 Route::get('download-buy-doc/{meeting}/{product}', function($meeting, $product) {
