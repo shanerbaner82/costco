@@ -63,7 +63,7 @@ class MeetingResource extends Resource
                 Select::make('status')
                     ->options([
                         'Pending' => 'Pending',
-                        'Samples' => 'Dropped off samples',
+                        'Samples' => 'Samples',
                         'Scheduled' => 'Scheduled',
                         'Active' => 'Active',
                         'Completed' => 'Completed',
@@ -164,6 +164,7 @@ class MeetingResource extends Resource
                     ->options([
                         'Not Scheduled' => 'Not Scheduled',
                         'Scheduled' => 'Scheduled',
+                        'Samples' => 'Samples',
                         'Active' => 'Active',
                         'Completed' => 'Completed',
                     ])->default('Scheduled'),
