@@ -24,7 +24,7 @@ class MeetingSampleReport extends Page
             ->get()
             ->filter(fn ($meeting) =>
             $meeting->vendors->filter(fn ($vendor) =>
-            ! empty($vendor->pivot->samples)
+                ! empty($vendor->pivot->samples)
             )->isNotEmpty()
             );
     }

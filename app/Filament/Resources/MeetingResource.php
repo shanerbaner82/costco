@@ -148,6 +148,7 @@ class MeetingResource extends Resource
                         'Samples' => 'warning',
                         'Scheduled' => 'success',
                         'Completed' => 'danger',
+                        default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('start_time')
                     ->sortable()
