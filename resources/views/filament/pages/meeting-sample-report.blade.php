@@ -4,7 +4,7 @@
 
         @forelse ($meetings as $meeting)
             <div class="mb-6 border-b pb-4">
-                <div class="font-semibold">Meeting on {{ $meeting->start_time->format('F j, Y') }} (Status: {{ $meeting->status }})</div>
+                <div class="font-semibold">Meeting on {{ $meeting->start_time?->format('F j, Y') }} (Status: {{ $meeting->status }})</div>
 
                     @foreach ($meeting->vendors as $vendor)
                         <div class="border border-gray-300 rounded mb-10 p-4 mb-6">
