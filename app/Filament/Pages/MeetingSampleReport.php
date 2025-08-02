@@ -20,7 +20,7 @@ class MeetingSampleReport extends Page
     {
         $this->meetings = Meeting::with(['vendors'])
             ->whereIn('status', ['Scheduled', 'Samples'])
-            ->orderBy('start_time') // assuming there's a `date` column
+            ->orderBy('created_at', 'desc') // assuming there's a `date` column
             ->get()
             ->filter(fn ($meeting) =>
             $meeting->vendors->filter(fn ($vendor) =>
