@@ -2,14 +2,24 @@
 
 namespace App\Filament\Widgets;
 
+use App\Filament\Resources\MeetingResource;
 use App\Models\Meeting;
+use Filament\Actions\Action;
 use Filament\Widgets\Widget;
 use Illuminate\Support\Carbon;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 
 class CalendarWidget extends FullCalendarWidget
 {
-//    protected static string $view = 'filament.widgets.calendar-widget';
+    protected function headerActions(): array
+    {
+        return [
+            Action::make('create')
+                ->label('New')
+                ->url(MeetingResource::getUrl('create')),
+        ];
+    }
+
     public function fetchEvents(array $fetchInfo): array
     {
         return Meeting::query()

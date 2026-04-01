@@ -6,24 +6,25 @@ use App\Filament\Resources\RegionResource\Pages;
 use App\Models\Region;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Table;
 
 class RegionResource extends Resource
 {
     protected static ?string $model = Region::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-globe-americas';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-globe-americas';
 
-    protected static ?string $navigationGroup = 'Setup';
+    protected static string|\UnitEnum|null $navigationGroup = 'Setup';
 
     protected static ?int $navigationSort = 4;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->inlineLabel()
             ->columns(1)
             ->schema([
@@ -65,11 +66,11 @@ class RegionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

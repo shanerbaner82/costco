@@ -9,9 +9,10 @@ use App\Models\Buyer;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,15 +22,15 @@ class BuyerResource extends Resource
 {
     protected static ?string $model = Buyer::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-currency-dollar';
 
-    protected static ?string $navigationGroup = 'Setup';
+    protected static string|\UnitEnum|null $navigationGroup = 'Setup';
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
             ->inlineLabel()
             ->schema([
@@ -82,11 +83,11 @@ class BuyerResource extends Resource
                     ->relationship('region', 'name')
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

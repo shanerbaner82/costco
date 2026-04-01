@@ -3,10 +3,11 @@
 namespace App\Filament\Resources\VendorResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
-use Filament\Tables\Actions\ReplicateAction;
+use Filament\Actions;
+use Filament\Actions\ReplicateAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 
@@ -14,9 +15,9 @@ class ProductsRelationManager extends RelationManager
 {
     protected static string $relationship = 'products';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
             ->schema([
                 Forms\Components\TextInput::make('name')
@@ -45,15 +46,15 @@ class ProductsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

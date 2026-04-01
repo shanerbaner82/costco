@@ -4,11 +4,12 @@ namespace App\Filament\Resources\MeetingResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -20,9 +21,9 @@ class ProductsRelationManager extends RelationManager
 
     protected static ?string $title = 'Buy Docs';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
             ->inlineLabel()
             ->schema([
@@ -78,13 +79,13 @@ class ProductsRelationManager extends RelationManager
                     ->sortable(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('download')
+                Actions\EditAction::make(),
+                Actions\Action::make('download')
                     ->label('Download')
                     ->visible(fn($record) => $record->buy_doc_url)
                     ->url(fn($record) => Storage::disk('public')->url($record->buy_doc_url))
                     ->openUrlInNewTab(),
-                Tables\Actions\Action::make('buy_doc_url')
+                Actions\Action::make('buy_doc_url')
                     ->icon('heroicon-o-printer')
                     ->label('Upload Buy Doc')
                     ->button()

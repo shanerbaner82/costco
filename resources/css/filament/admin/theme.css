@@ -1,6 +1,4 @@
-@import '/vendor/filament/filament/resources/css/theme.css';
-
-@config 'tailwind.config.js';
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
 
 .fi-ta-table > thead > tr {
     @apply divide-x divide-gray-200 dark:divide-white/5;

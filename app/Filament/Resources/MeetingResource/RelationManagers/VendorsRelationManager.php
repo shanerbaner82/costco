@@ -3,9 +3,10 @@
 namespace App\Filament\Resources\MeetingResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,9 +18,9 @@ class VendorsRelationManager extends RelationManager
 
     protected static ?string $title = 'Samples';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
             ->inlineLabel()
             ->schema([
@@ -47,8 +48,8 @@ class VendorsRelationManager extends RelationManager
                     ->html()
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('Print')
+                Actions\EditAction::make(),
+                Actions\Action::make('Print')
                     ->visible(fn($record) => $record->samples)
                     ->url(fn($record) => route('print-samples', ['vendor' => $record, 'meeting' => $this->ownerRecord->id]))
                     ->icon('heroicon-o-printer')

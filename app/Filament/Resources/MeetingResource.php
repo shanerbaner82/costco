@@ -14,12 +14,13 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
+use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -31,13 +32,13 @@ class MeetingResource extends Resource
 {
     protected static ?string $model = Meeting::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar-days';
 
     protected static ?int $navigationSort = -1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
             ->inlineLabel()
             ->schema([
@@ -173,9 +174,9 @@ class MeetingResource extends Resource
             ])
             ->defaultSort('start_time')
             ->actions([
-                Tables\Actions\EditAction::make()
+                Actions\EditAction::make()
                     ->button(),
-                Tables\Actions\DeleteAction::make()
+                Actions\DeleteAction::make()
                     ->button()
                     ->visible(fn($record) => $record->status !== 'Completed'),
             ]);
